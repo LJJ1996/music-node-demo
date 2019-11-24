@@ -1,10 +1,6 @@
-let mysql = require('mysql');
-let pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'node_music'
-});
+let mysql = require("mysql");
+const { dbConfig } = require("../config");
+let pool = mysql.createPool(dbConfig);
 
 let db = {};
 // db.q('select..', [], function (err, data) {
@@ -14,24 +10,24 @@ let db = {};
 //     console.log(data);
 // })
 
-db.q = function (sql, params, callback) {
-    return new Promise((resolve, reject) => {
-        pool.getConnection(function (err, connection) {
-            if (err) {
-                callback(err, null);
-                return;
-            }
-            connection.query(sql, params, function (error, results, fields) {
-                console.log(`${sql} => ${params}`);
-                connection.release();
-                if (error) {
-                    reject(eror);
-                    return;
-                }
-                resolve(results);
-            })
-        })
-    })
-}
+db.q = function(sql, params, callback) {
+  return new Promise((resolve, reject) => {
+    pool.getConnection(function(err, connection) {
+      if (err) {
+        reject(err);
+        return;
+      }
+      connection.query(sql, params, function(error, results, fields) {
+        console.log(`${sql} => ${params}`);
+        connection.release();
+        if (error) {
+          reject(error);
+          return;
+        }
+        resolve(results);
+      });
+    });
+  });
+};
 
 module.exports = db;
