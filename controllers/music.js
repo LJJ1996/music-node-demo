@@ -53,5 +53,31 @@ module.exports = {
       code: "001",
       msg: result.message
     };
+  },
+  async deleteMusic(ctx, next) {
+    let id = Number(ctx.request.query.id);
+    let result = await musicModal.deleteMusicById(id);
+    if (result.affectedRows === 0) {
+      ctx.body = {
+        code: "002",
+        msg: result.message
+      };
+      return;
+    }
+    ctx.body = {
+      code: "001",
+      msg: "删除成功"
+    };
+  },
+  async showEdit(ctx, next) {
+    let id = ctx.query.id;
+    let musics = await musicModal.findMusicsById(id);
+    if (musics.lenght === 0) {
+      ctx.throw('歌曲不存在');
+      return;
+    }
+    ctx.render('edit', {
+      music: musics[0]
+    })
   }
 };

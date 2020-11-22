@@ -75,7 +75,7 @@ camel-case@3.0.x:
 
 captchapng2@^1.0.3:
   version "1.0.3"
-  resolved "https://registry.yarnpkg.com/captchapng2/-/captchapng2-1.0.3.tgz#ceaf8402cca3e3051de8d151b70650ba39b26705"
+  resolved "https://registry.npm.taobao.org/captchapng2/download/captchapng2-1.0.3.tgz#ceaf8402cca3e3051de8d151b70650ba39b26705"
   integrity sha1-zq+EAsyj4wUd6NFRtwZQujmyZwU=
   dependencies:
     node-pnglib "^1.5.2"

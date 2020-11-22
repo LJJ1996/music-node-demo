@@ -1,4 +1,5 @@
 const userModel = require("../models/user");
+const captchapng = require("captchapng2");
 module.exports = {
   showRegister: async (ctx, next) => {
     // let users = await userModel.getUsers();
@@ -57,12 +58,17 @@ module.exports = {
       return;
     }
     let user = users[0];
-    console.log(user)
+    console.log(user);
     if (user.password === password) {
       ctx.body = { code: "001", msg: "登陆成功" };
       ctx.session.user = user;
       return;
     }
     ctx.body = { code: "001", msg: "用户名或密码不存在" };
+  },
+  getPic: async (ctx, next) => {
+    let rand = parseInt(Math.random() * 9000 + 1000);
+    let png = new captchapng(80, 30, rand);
+    ctx.body = png.getBuffer();
   }
 };
